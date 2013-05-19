@@ -123,7 +123,6 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     owner node[:mongodb][:user]
     group node[:mongodb][:group]
     action :create
-    recursive true
     to "/journal"
   end
      
