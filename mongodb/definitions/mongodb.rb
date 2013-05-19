@@ -118,11 +118,10 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     recursive true
   end
   
-   # log dir [make sure it exists]
+   # journal link [make sure it exists]
   link journalpath do
     owner node[:mongodb][:user]
     group node[:mongodb][:group]
-    mode "0755"
     action :create
     recursive true
     to "/journal"
