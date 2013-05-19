@@ -86,21 +86,7 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
   
   # service
   service name do
-    supports :status => true, :restart => true
-    action service_action
-    service_notifies.each do |service_notify|
-      notifies :run, service_notify
-    end
-    if !replicaset_name.nil? && node['mongodb']['auto_configure']['replicaset']
-      notifies :create, "ruby_block[config_replicaset]"
-    end
-    if type == "mongos" && node['mongodb']['auto_configure']['sharding']
-      notifies :create, "ruby_block[config_sharding]", :immediately
-    end
-    if name == "mongodb"
-      # we don't care about a running mongodb service in these cases, all we need is stopping it
-      ignore_failure true
-    end
+    action :nothing
   end
   
   # default file
@@ -164,7 +150,32 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     variables :provides => name
     notifies :restart, resources(:service => name)
   end
-   
+  
+  # service
+  service name do
+    supports :status => true, :restart => true
+    action service_action
+  end
+  
+  # service
+  service name do
+    supports :status => true, :restart => true
+    action service_action
+    service_notifies.each do |service_notify|
+      notifies :run, service_notify
+    end
+    if !replicaset_name.nil? && node['mongodb']['auto_configure']['replicaset']
+      notifies :create, "ruby_block[config_replicaset]"
+    end
+    if type == "mongos" && node['mongodb']['auto_configure']['sharding']
+      notifies :create, "ruby_block[config_sharding]", :immediately
+    end
+    if name == "mongodb"
+      # we don't care about a running mongodb service in these cases, all we need is stopping it
+      ignore_failure true
+    end
+  end
+  
   # replicaset
   if !replicaset_name.nil? && node['mongodb']['auto_configure']['replicaset']
     rs_nodes = search(
