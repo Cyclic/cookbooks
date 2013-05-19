@@ -86,6 +86,7 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
   
   # service
   service name do
+    supports :status => true, :restart => true
     action :nothing
   end
   
@@ -150,16 +151,9 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     variables :provides => name
     notifies :restart, resources(:service => name)
   end
-  
+   
   # service
   service name do
-    supports :status => true, :restart => true
-    action service_action
-  end
-  
-  # service
-  service name do
-    supports :status => true, :restart => true
     action service_action
     service_notifies.each do |service_notify|
       notifies :run, service_notify
