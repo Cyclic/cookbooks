@@ -106,7 +106,7 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
       "shardsrv" => false,  #type == "shard", dito.
       "enable_rest" => params[:enable_rest]
     )
-    notifies :restart, "service[#{name}]"
+    notifies :restart, resources(:service => name)
   end
   
   # log dir [make sure it exists]
@@ -143,7 +143,7 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     owner "root"
     mode "0755"
     variables :provides => name
-    notifies :restart, "service[#{name}]"
+    notifies :restart, resources(:service => name)
   end
   
   # service
