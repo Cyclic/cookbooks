@@ -120,8 +120,6 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
   
    # journal link [make sure it exists]
   link journalpath do
-    owner node[:mongodb][:user]
-    group node[:mongodb][:group]
     action :create
     to "/journal"
   end
