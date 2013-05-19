@@ -119,9 +119,9 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
   end
   
    # journal link [make sure it exists]
-  link journalpath do
-    action :create
-    to "/journal"
+  execute "" do
+    command "sudo ln -s /journal /data/journal"
+    action :nothing
   end
      
   if type != "mongos"
