@@ -97,9 +97,9 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
   end
   
   # default file
-  template "#{node['mongodb']['defaults_dir']}/#{name}" do
+  template "#{configfile}" do
     action :create
-    source "mongodb.default.erb"
+    source "mongodb.amazon.erb"
     group node['mongodb']['root_group']
     owner "root"
     mode "0644"

@@ -50,7 +50,7 @@ when "freebsd"
   default[:mongodb][:package_name] = "mongodb"
 
 when "centos","redhat","fedora","amazon","scientific"
-  default[:mongodb][:defaults_dir] = "/etc/sysconfig"
+  default[:mongodb][:defaults_dir] = "/etc"
   default[:mongodb][:package_name] = "mongo-10gen-server"
   default[:mongodb][:user] = "mongod"
   default[:mongodb][:group] = "mongod"
