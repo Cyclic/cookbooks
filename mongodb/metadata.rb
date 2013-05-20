@@ -32,7 +32,7 @@ attribute "mongodb/logpath",
 attribute "mongodb/journalpath",
   :display_name => "journalpath",
   :description => "Path to store the journal files of a mongodb instance",
-  :default => "/data/journal"
+  :default => "/journal"
 
 attribute "mongodb/port",
   :display_name => "Port",

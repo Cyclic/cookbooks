@@ -84,6 +84,12 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     configserver = configserver_nodes.collect{|n| "#{n['fqdn']}:#{n['mongodb']['port']}" }.join(",")
   end
   
+  # journal link [make sure it exists]
+  execute "" do
+    command "sudo ln -s #{journalpath} #{dbpath}/journal"
+    action :nothing
+  end
+  
   # service
   service name do
     supports :status => true, :restart => true
@@ -106,6 +112,7 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
       "port" => port,
       "logpath" => logfile,
       "dbpath" => dbpath,
+      "journalpath" => journalpath,
       "replicaset_name" => replicaset_name,
       "configsrv" => false, #type == "configserver", this might change the port
       "shardsrv" => false,  #type == "shard", dito.
@@ -122,13 +129,7 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     action :create
     recursive true
   end
-  
-   # journal link [make sure it exists]
-  execute "" do
-    command "sudo ln -s /journal /data/journal"
-    action :nothing
-  end
-     
+      
   if type != "mongos"
     # dbpath dir [make sure it exists]
     directory dbpath do
