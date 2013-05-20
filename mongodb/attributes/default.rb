@@ -18,7 +18,7 @@
 #
 
 default[:mongodb][:dbpath] = "/data"
-default[:mongodb][:dbpath] = "/data/journal"
+default[:mongodb][:journalpath] = "/data/journal"
 default[:mongodb][:logpath] = "/log"
 default[:mongodb][:bind_ip] = nil
 default[:mongodb][:port] = 27017
