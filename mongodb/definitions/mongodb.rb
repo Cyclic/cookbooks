@@ -97,7 +97,32 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
   end
   
   # default file
-  template "#{node['mongodb']['defaults_dir']}/mongod.conf" do
+  template "#{node['mongodb']['defaults_dir']}/#{name}" do
+    action :create
+    source "mongodb.default.erb"
+    group node['mongodb']['root_group']
+    owner "root"
+    mode "0644"
+    variables(
+      "daemon_path" => daemon,
+      "name" => name,
+      "config" => configfile,
+      "configdb" => configserver,
+      "bind_ip" => bind_ip,
+      "port" => port,
+      "logpath" => logfile,
+      "dbpath" => dbpath,
+      "journalpath" => journalpath,
+      "replicaset_name" => replicaset_name,
+      "configsrv" => false, #type == "configserver", this might change the port
+      "shardsrv" => false,  #type == "shard", dito.
+      "enable_rest" => params[:enable_rest]
+    )
+    notifies :restart, resources(:service => name)
+  end
+  
+  # config file
+  template "/etc/mongod.conf" do
     action :create
     source "mongodb.amazon.erb"
     group node['mongodb']['root_group']
