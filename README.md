@@ -1,6 +1,6 @@
 I am doing work on a new opsworks fork, so only use this one for code comments for now. Use the link below for all future.
 =========
-https://github.com/Cyclic/opsworks-cookbooks
+https://github.com/Cyclic/opsworks-cookbooks/tree/master/opsworks_mongodb
 
 
 
