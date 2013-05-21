@@ -1,4 +1,4 @@
-I am doing work on a new opsworks fork, so only use this one for code comments for now.
+I am doing work on a new opsworks fork, so only use this one for code comments for now. Use the link below for all future.
 =========
 https://github.com/Cyclic/opsworks-cookbooks
 
